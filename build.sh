@@ -14,7 +14,16 @@ for i in $(cd themes && ls *.yaml); do
   #mkdir -p ../$name
   echo "python26 anathem.py $name > ../../../htdocs/$name.html;"
   python26 anathem.py $name > ../../../htdocs/$name.html;
+done
+
+for i in $(cd themes && ls *.manifest); do 
+  export name=$(echo $i|sed -e 's/\..*//g');
+  echo "building $name.manifest..."
+  echo "CACHE MANIFEST" > ../../../htdocs/$name.manifest
+  echo "# version `cat VERSION` `date +\"%F %T\"`" >> ../../../htdocs/$name.manifest
+  cat themes/$name.manifest >> ../../../htdocs/$name.manifest
 done 
+
 cd ../../..
 
 # copy all anathem libraries into htdocs/js
